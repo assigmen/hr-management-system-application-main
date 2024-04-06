@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Users</title>
+</head>
+<body>
+    <div layout:fragment="content" class="container-fluid pt-5">
+        <nav aria-label="breadcrumb" class="pt-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"> List Users</li>
+            </ol>
+        </nav>
+        <div class="card mt-4">
+            <div class="card-header">
+                   List User
+                    <a th:href="@{/users/create}" class="btn btn-primary btn-sm float-end">Add</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>User Id</th>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Roles</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                            <tr th:each="object: ${users}">
+                                <td th:text="${object.id}"></td>
+                                <td>
+                                    <img th:src="${object.profile}" width="50" height="50" class="picture-src" id="wizardPicturePreview" title="">
+                                </td>
+                                <td th:text="${object.username}"></td>
+                                <td th:text="${object.phone}"></td>
+                                <td th:text="${object.email}"></td>
+                                <td>
+                                    <span  th:if="${object.status=='ACT'}">Active</span>
+                                    <span th:if="${object.status=='DEL'}">Delete</span>
+                                    <span th:if="${object.status=='DSL'}">Disable</span>
+                                </td>
+                                <td>
+                                    <div th:each="role : ${object.roles}">
+                                        <span  th:if="${role.name=='ROLE_ADMIN'}">Administrator</span>
+                                        <span th:if="${role.name=='ROLE_USER'}">User</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" th:href="@{'/users/edit/'+${object.id}}">Edit</a>
+                                    <a class="btn btn-danger btn-sm" th:href="@{'/users/delete/'+${object.id}}">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

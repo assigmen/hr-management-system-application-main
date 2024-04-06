@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Modifier Employee
+    </title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid  pt-5">
+    <nav aria-label="breadcrumb" class="pt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/employees}">List Employee</a></li>
+            <li th:if="${employee.id==0}" class="breadcrumb-item active" aria-current="page">Create</li>
+            <li th:if="${employee.id!=0}" class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+    <div class="card mt-4">
+        <div class="card-header">
+            <span th:if="${employee.id==0}">Create Employee</span>
+            <span th:if="${employee.id!=0}">Update Employee</span>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/employees/create}" method="post" th:object="${employee}"  enctype="multipart/form-data">
+                <div class="row">
+                    <input type="text" hidden th:field="${employee.id}">
+                    <input type="text" hidden th:field="${employee.employeeNo}">
+                    <div class="md-3">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" th:field="${employee.firstName}" type="text"
+                               placeholder="Enter first Name"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control" th:field="${employee.lastName}" type="text"
+                               placeholder="Enter last Name"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Employee Name</label>
+                        <input class="form-control" th:field="${employee.name}" type="text"
+                               placeholder="Enter full name"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Gender</label>
+                        <select class="form-control" th:field="${employee.gender}">
+                            <option th:each="gender : ${employee.genders}"
+                                    th:value="${gender.key}"
+                                    th:text="${gender.value}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="md-3">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" th:field="${employee.phone}" type="text" placeholder="Enter phone"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" th:field="${employee.email}" type="text" placeholder="Enter email"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-control" cols="30" rows="10" th:field="${employee.address}"></textarea>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Joined Date</label>
+                        <input class="form-control" th:field="${employee.joinedDate}" type="date"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Department</label>
+                        <select class="form-control" th:field="${employee.department}">
+                            <option th:each="dep : ${employee.departments}"
+                                    th:value="${dep.id}"
+                                    th:text="${dep.name}">
+
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Position</label>
+                        <select class="form-control" th:field="${employee.position}">
+                            <option th:each="p : ${employee.positions}"
+                                    th:value="${p.id}"
+                                    th:text="${p.name}">
+
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Status</label>
+                        <select class="form-control" th:field="${employee.status}">
+                            <option th:each="status : ${employee.statusList}"
+                                    th:value="${status.key}"
+                                    th:text="${status.value}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Line Manager</label>
+                        <select class="form-control" th:field="${employee.lineManager}">
+                            <option value="0">Top Line Manager</option>
+                            <option th:each="p : ${employee.lineManagers}"
+                                    th:value="${p.id}"
+                                    th:text="${p.name}">
+
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Profile</label>
+                        <img width="100" height="100" th:src="*{profile}" class="picture-src m-2" id="wizardPicturePreview" title="">
+                        <input type="file" th:field="*{file}" id="wizard-picture" class="form-control" accept="image/*">
+                    </div>
+                    <div class="md-3 pt-2">
+                        <button th:if="${employee.id == 0}" type="submit" class="btn btn-primary btn-sm">Create</button>
+                        <button th:if="${employee.id != 0}" type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

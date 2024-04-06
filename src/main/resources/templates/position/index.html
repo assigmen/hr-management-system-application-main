@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Position</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid pt-5">
+    <nav aria-label="breadcrumb" class="pt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> List Position</li>
+        </ol>
+    </nav>
+    <div class="card mt-4">
+        <div class="card-header">
+            List Position
+            <a th:href="@{/positions/create}" class="btn btn-primary btn-sm float-end">Add</a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="obj: ${positions}">
+                            <td th:text="${obj.id}"></td>
+                            <td th:text="${obj.name}"></td>
+                            <td th:text="${obj.code}"></td>
+                            <td>
+                                <span  th:if="${obj.status=='ACT'}">Active</span>
+                                <span th:if="${obj.status=='DEL'}">Delete</span>
+                                <span th:if="${obj.status=='DSL'}">Disable</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" th:href="@{'/positions/edit/'+${obj.id}}">Edit</a>
+                                <a class="btn btn-danger btn-sm" th:href="@{'/positions/delete/'+${obj.id}}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

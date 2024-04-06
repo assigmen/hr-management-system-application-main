@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid pt-5">
+    <nav aria-label="breadcrumb" class="pt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+        </ol>
+    </nav>
+    <div class="card mt-4">
+        <div class="card-header">
+            Dashboard
+            <a th:href="@{/employees/create}" class="btn btn-primary btn-sm float-end">Add</a>
+        </div>
+        <div class="card-body">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

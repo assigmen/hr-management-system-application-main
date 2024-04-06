@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HR Home Page</title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid pt-5">
+    <div class="card">
+
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="card col-md-4 col-sm-12 p-5 mt-5" style="background-color: white !important;">
+            <h4 class="text-center mb-5">Login</h4>
+            <hr>
+            <input type="hidden" id="error_status" th:value="${error_status}">
+
+            <form id="login-form" method="POST" th:action="@{/login}">
+                <div class="col-md-12 pt-2">
+                    <label>Phone Number</label>
+                    <input type="tel" class="form-control" id="phone_nm" name="phoneNumber"
+                           required>
+                </div>
+                <div class="col-md-12 pt-2">
+                    <label>Password</label><span id="sms_pwd" class="sms_error c-red">Password</span>
+                    <input type="password" class="form-control" id="pwd_nm" name="password"
+                           required/>
+                </div>
+
+                <div class="option-container pt-2">
+                    <div class="row">
+                        <div class="col-lg-5 col-5 ">
+                            <a href="/forgot-password/init" class="saren-font">Forgot Password?</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary col-12">Login</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+</body>
+</html>

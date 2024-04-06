@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Employee</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+</head>
+<body >
+    <div layout:fragment="content" class="container-fluid pt-5">
+        <nav aria-label="breadcrumb" class="pt-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page"> List Employee</li>
+            </ol>
+        </nav>
+        <div class="card mt-4">
+            <div class="card-header">
+                <span >
+                    List Employee
+                </span>
+
+                    <a th:href="@{/employees/create}" class="btn btn-primary btn-sm float-end">Add</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+<!--                        <table class="table table-bordered table-hover">-->
+<!--                            <thead>-->
+<!--                            <th>Employee Id</th>-->
+<!--                            <th>Profile</th>-->
+<!--                            <th>Name</th>-->
+<!--                            <th>Gender</th>-->
+<!--                            <th>Department</th>-->
+<!--                            <th>Position</th>-->
+<!--                            <th>Line Manager</th>-->
+<!--                            <th>Status</th>-->
+<!--                            <th>Action</th>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="employe: ${employees}">-->
+<!--                                <td th:text="${employe.employeeNo}"></td>-->
+<!--                                <td>-->
+<!--                                    <img th:src="${employe.profile}" width="50" height="50" class="picture-src" id="wizardPicturePreview" title="">-->
+<!--                                </td>-->
+<!--                                <td th:text="${employe.name}"></td>-->
+<!--                                <td th:text="${employe.gender}"></td>-->
+<!--                                <td >-->
+<!--                                    <span th:if="${employe.department != null}">-->
+<!--                                         <span th:text="${employe.department.name}"></span>-->
+<!--                                    </span>-->
+
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span th:if="${employe.position !=null}">-->
+<!--                                          <span th:text="${employe.position.name}"></span>-->
+<!--                                    </span>-->
+
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span th:if="${employe.lineManager !=null}">-->
+<!--                                        <span th:text="${employe.lineManager.name}"></span>-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span  th:if="${employe.status=='ACT'}">Active</span>-->
+<!--                                    <span th:if="${employe.status=='DEL'}">Delete</span>-->
+<!--                                    <span th:if="${employe.status=='DSL'}">Disable</span>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <a class="btn btn-primary btn-sm" th:href="@{'/employees/edit/'+${employe.id}}">Edit</a>-->
+<!--                                    <a class="btn btn-danger btn-sm" th:href="@{'/employees/delete/'+${employe.id}}">Delete</a>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+
+                        <table id="employeeTable" class="table table-striped display shadow-sm" style="width:100%">
+                            <thead>
+                            <th>Employee Id</th>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Department</th>
+                            <th>Position</th>
+                            <th>Line Manager</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div layout:fragment="script">
+        <script>
+            $('#employeeTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "/api/employees",
+                columns: [
+                    {
+                        data: 'employeeNo',
+                    },
+                    {
+                        data: "profile",
+                        render: (data) => `<img src="${data}" width="30" height="30" className="picture-src"
+                                           id="wizardPicturePreview" title=""/>`
+                    },
+                    {
+                        data: 'name',
+                    },
+                    {
+                        data: 'gender',
+                    },
+                    {
+                        data:'department.name'
+                    },
+                    {
+                        data:'position.name'
+                    },
+                    {
+                        data:'lineManager',
+                        render:(data)=>`<span>${data===null ? '' : data.name}</span>`
+                    },
+                    {
+                        data: 'status',
+                        render: (data) => `<span class="badge bg-${data==='ACT' ? 'success' : 'danger'}">${data==='ACT' ? 'Active' : 'Inactive'}</span>`
+                    },
+                    {
+                        data:'id',
+                        render:(data)=>`<a class="btn btn-primary btn-sm" href="/employees/edit/${data}">Edit</a> <a class="btn btn-danger btn-sm" href="/employees/delete/${data}">Delete</a>`
+                    },
+                ]
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>

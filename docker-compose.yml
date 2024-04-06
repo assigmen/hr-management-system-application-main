@@ -1,0 +1,8 @@
+version: '3'
+services:
+  hrwebapplication:
+    build: .
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/ubuntu/projects/hrwebapplication/upload/image:/home/ubuntu/projects/hrwebapplication/upload/image

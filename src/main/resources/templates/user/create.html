@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Modifier User
+    </title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid  pt-5">
+    <nav aria-label="breadcrumb" class="pt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/users}">List Users</a></li>
+            <li th:if="${user.id==0}" class="breadcrumb-item active" aria-current="page">Create</li>
+            <li th:if="${user.id!=0}" class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+    <div class="card mt-4">
+        <div class="card-header">
+            <span th:if="${user.id==0}">Create User</span>
+            <span th:if="${user.id!=0}">Update User</span>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/users/create}" method="post" th:object="${user}"  enctype="multipart/form-data">
+                <div class="row">
+                    <input type="text" hidden th:field="${user.id}">
+                    <div class="md-3">
+                        <label class="form-label">Username</label>
+                        <input class="form-control" th:field="${user.username}" type="text"
+                               placeholder="Enter last Name"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Phone Number</label>
+                        <input class="form-control" th:field="${user.phone}" type="text"
+                               placeholder="Phone"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" th:field="${user.email}" type="text"
+                               placeholder="Email"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Password</label>
+                        <input class="form-control" th:field="${user.password}" type="text"
+                               placeholder="Password"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Status</label>
+                        <select class="form-control" th:field="${user.status}">
+                            <option th:each="status : ${user.statusList}"
+                                    th:value="${status.key}"
+                                    th:text="${status.value}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-3">
+                        <label>Select Role</label>
+                            <div class="md-3" th:each="role : ${allRoles}">
+                                <input  type="checkbox" name="roles" class="checkbox"
+                                        th:text="${role.name}"
+                                        th:value="${role.id}"
+                                        th:field="*{roles}"
+                                />
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="md-3">
+                        <label class="form-label">Select Profile</label>
+                        <img th:src="*{profile}" class="picture-src" id="wizardPicturePreview" title="">
+                        <input type="file" th:field="*{file}" id="wizard-picture" class="form-control" accept="image/*">
+                    </div>
+                    <div class="md-3 pt-2">
+                        <button th:if="${user.id == 0}" type="submit" class="btn btn-primary btn-sm">Create</button>
+                        <button th:if="${user.id != 0}" type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

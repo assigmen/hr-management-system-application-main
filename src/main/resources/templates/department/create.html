@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Modifier Department
+    </title>
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid  pt-5">
+    <nav aria-label="breadcrumb" class="pt-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/departments}">List Department</a></li>
+            <li th:if="${object.id==0}" class="breadcrumb-item active" aria-current="page">Create</li>
+            <li th:if="${object.id!=0}" class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+    <div class="card mt-4">
+        <div class="card-header">
+            <span th:if="${object.id==0}">Create Department</span>
+            <span th:if="${object.id!=0}">Update Department</span>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/departments/create}" method="post" th:object="${object}">
+                <input type="text" hidden th:field="${object.id}">
+                <div class="row">
+                    <div class="md-3">
+                        <label class="form-label"> Name</label>
+                        <input class="form-control" th:field="${object.name}" type="text"
+                               placeholder="Code"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label"> Code</label>
+                        <input class="form-control" th:field="${object.code}" type="text"
+                               placeholder="Code"/>
+                    </div>
+                    <div class="md-3">
+                        <label class="form-label">Select Status</label>
+                        <select class="form-control" th:field="${object.status}">
+                            <option th:each="status : ${object.statusList}"
+                                    th:value="${status.key}"
+                                    th:text="${status.value}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="md-3 pt-2">
+                        <button th:if="${object.id == 0}" type="submit" class="btn btn-primary btn-sm">Create</button>
+                        <button th:if="${object.id != 0}" type="submit" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
